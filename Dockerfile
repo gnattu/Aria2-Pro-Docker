@@ -11,11 +11,12 @@
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 
-FROM p3terx/s6-alpine
+FROM p3terx/s6-debian
 
-RUN apk add --no-cache jq findutils && \
+RUN apt update && apt install -y cron curl jq findutils && \
+    apt clean && \
     curl -fsSL git.io/aria2c.sh | bash && \
-    rm -rf /var/cache/apk/* /tmp/*
+    rm -rf /var/lib/apt/lists/** /tmp/*
 
 COPY rootfs /
 
